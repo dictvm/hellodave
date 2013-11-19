@@ -2,8 +2,6 @@ package main
 
 import (
     "fmt"
-//    "io/ioutil"
- //   "os"
 )
 
 func check(e error) {
@@ -73,3 +71,15 @@ func multiName(userInput string) {
     }
 }
 
+func writeToFile() {
+    fmt.Println("writing: " + filename)
+    f, err := os.Create(filename)
+    if err != nil {
+        fmt.Println(err)
+    }
+    n, err := io.WriteString(f, "test?)")
+    if err != nil {
+        fmt.Println(n, err)
+    }
+    f.Close()
+}
