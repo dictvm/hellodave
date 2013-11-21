@@ -2,12 +2,29 @@ package main
 
 import (
     "fmt"
+    "io"
+    "os"
 )
 
+// unsure if this is actually useful right now
+// will keep it to find out.
 func check(e error) {
     if e != nil {
         panic(e)
     }
+}
+
+func writeToFile() {
+    fmt.Println("writing: " + filename)
+    f, err := os.Create(filename)
+    if err != nil {
+        fmt.Println(err)
+    }
+    n, err := io.WriteString(f, "test?)")
+    if err != nil {
+        fmt.Println(n, err)
+    }
+    f.Close()
 }
 
 func main() {
@@ -19,7 +36,9 @@ func main() {
     ageOfDave := 42
     ageOfUser := 0
 
+// grab username via keyboard input
     fmt.Scanln(&userInput)
+    writeToFile
 
     fmt.Println("So, your name is " +userInput +".")
 
@@ -33,6 +52,7 @@ func main() {
     for userInput == "Dave" {
         fmt.Println("Tell me your name, again.")
         fmt.Scanln(&userInput)
+        writeToFile
     }
 
     if isNameDave == true {
@@ -42,6 +62,7 @@ func main() {
 
     fmt.Println("Now tell me your age, human.")
     fmt.Scanf("%d", &ageOfUser)
+        writeToFile
 
     if ageOfDave == ageOfUser {
         fmt.Println("Nice try, Dave. Goodbye, Dave.")
@@ -71,15 +92,3 @@ func multiName(userInput string) {
     }
 }
 
-func writeToFile() {
-    fmt.Println("writing: " + filename)
-    f, err := os.Create(filename)
-    if err != nil {
-        fmt.Println(err)
-    }
-    n, err := io.WriteString(f, "test?)")
-    if err != nil {
-        fmt.Println(n, err)
-    }
-    f.Close()
-}
