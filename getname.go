@@ -2,8 +2,8 @@ package main
 
 import (
     "fmt"
-//    "io"
     "os"
+    "strconv"
 )
 
 // unsure if this is actually useful right now
@@ -16,18 +16,16 @@ func check(e error) {
 
 func main() {
 
-    writeToFile()
-
     fmt.Println("Tell me your name, human.")
 
     var userInput string
     var isNameDave bool = false
+    var sex string
     ageOfDave := 42
     ageOfUser := 0
 
 // grab username via keyboard input
     fmt.Scanln(&userInput)
-    writeToFile()
 
     fmt.Println("So, your name is " +userInput +".")
 
@@ -41,7 +39,6 @@ func main() {
     for userInput == "Dave" {
         fmt.Println("Tell me your name, again.")
         fmt.Scanln(&userInput)
-        writeToFile()
     }
 
     if isNameDave == true {
@@ -51,7 +48,6 @@ func main() {
 
     fmt.Println("Now tell me your age, human.")
     fmt.Scanf("%d", &ageOfUser)
-        writeToFile()
 
     if ageOfDave == ageOfUser {
         fmt.Println("Nice try, Dave. Goodbye, Dave.")
@@ -60,9 +56,14 @@ func main() {
         fmt.Println("Welcome" +userInput +".")
     }
 
+    fmt.Println("Now tell me your gender, human.")
+    fmt.Scanln(&sex)
+
     fmt.Println( destroyWorld( ageOfUser ) )
 
     multiName( userInput )
+
+    writeToFile(userInput, ageOfUser, sex)
 
 }
 
@@ -81,7 +82,7 @@ func multiName(userInput string) {
     }
 }
 
-func writeToFile() {
+func writeToFile(name string, age int, sex string) {
     fmt.Println("writing: ")
 //    f, err := os.Create("/Users/dictvm/go/dave.txt")
 //    f, err := os.Open("/Users/dictvm/go/dave.txt")
@@ -90,7 +91,7 @@ func writeToFile() {
         fmt.Println("Error: ")
         fmt.Println(err)
     }
-    n, err := f.WriteString("test?")
+    n, err := f.WriteString(name+"," + strconv.Itoa(age)+"," + sex)
     if err != nil {
         fmt.Println("Error 2: ")
         fmt.Println(n, err)
