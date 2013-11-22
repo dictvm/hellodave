@@ -2,7 +2,7 @@ package main
 
 import (
     "fmt"
-    "io"
+//    "io"
     "os"
 )
 
@@ -14,20 +14,9 @@ func check(e error) {
     }
 }
 
-func writeToFile() {
-    fmt.Println("writing: " + filename)
-    f, err := os.Create(filename)
-    if err != nil {
-        fmt.Println(err)
-    }
-    n, err := io.WriteString(f, "test?)")
-    if err != nil {
-        fmt.Println(n, err)
-    }
-    f.Close()
-}
-
 func main() {
+
+    writeToFile()
 
     fmt.Println("Tell me your name, human.")
 
@@ -38,7 +27,7 @@ func main() {
 
 // grab username via keyboard input
     fmt.Scanln(&userInput)
-    writeToFile
+    writeToFile()
 
     fmt.Println("So, your name is " +userInput +".")
 
@@ -52,7 +41,7 @@ func main() {
     for userInput == "Dave" {
         fmt.Println("Tell me your name, again.")
         fmt.Scanln(&userInput)
-        writeToFile
+        writeToFile()
     }
 
     if isNameDave == true {
@@ -62,7 +51,7 @@ func main() {
 
     fmt.Println("Now tell me your age, human.")
     fmt.Scanf("%d", &ageOfUser)
-        writeToFile
+        writeToFile()
 
     if ageOfDave == ageOfUser {
         fmt.Println("Nice try, Dave. Goodbye, Dave.")
@@ -92,3 +81,19 @@ func multiName(userInput string) {
     }
 }
 
+func writeToFile() {
+    fmt.Println("writing: ")
+//    f, err := os.Create("/Users/dictvm/go/dave.txt")
+//    f, err := os.Open("/Users/dictvm/go/dave.txt")
+    f, err := os.OpenFile("/Users/dictvm/go/dave.txt", os.O_RDWR | os.O_CREATE, 0666)
+    if err != nil {
+        fmt.Println("Error: ")
+        fmt.Println(err)
+    }
+    n, err := f.WriteString("test?")
+    if err != nil {
+        fmt.Println("Error 2: ")
+        fmt.Println(n, err)
+    }
+    f.Close()
+}
